@@ -8,12 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['main', 'accompaniment', 'sauces']);
             $table->float('value');
-            $table->string('name', 100);
-            $table->string('image', 100);
+            $table->enum('status', ['progress', 'completed']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -21,6 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('orders');
     }
 };
