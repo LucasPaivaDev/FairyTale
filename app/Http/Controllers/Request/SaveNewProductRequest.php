@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Request;
 
 use Illuminate\Http\Request;
 
-class ContactEmailRequest extends Request
+class SaveNewProductRequest extends Request
 {
     public function authorize(): bool
     {
@@ -16,9 +16,9 @@ class ContactEmailRequest extends Request
     {
         $rules = [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'message' => 'required|string|max:2000',
+            'value' => 'required|string|max:255',
+            'type' => 'required|string|max:30',
+            'image' => 'required|string|max:200',
         ];
     
         return $rules;

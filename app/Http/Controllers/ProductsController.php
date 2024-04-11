@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Contact\Domain\Service\ProductsService;
 use Illuminate\Http\JsonResponse;
+use App\Domain\Contact\Domain\Service\ProductsService;
+use App\Http\Controllers\Request\SaveNewProductRequest;
 
 class ProductsController
 {
@@ -11,9 +12,10 @@ class ProductsController
     {
     }
 
-    public function saveNewProductAction(ContactEmailRequest $request): JsonResponse
+    public function saveNewProductAction(SaveNewProductRequest $request): JsonResponse
     {
-        $output = $this->contactApplication->sendEmail(new InputContactEmail($request));
+        dd($request);
+        $output = $this->productsService->saveNewProduct($request);
 
         return response()->json($output, JsonResponse::HTTP_OK);
     } 

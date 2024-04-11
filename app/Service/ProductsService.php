@@ -8,4 +8,9 @@ use App\Kernel\Email\Job\EmailManagerJob;
 
 class ProductsService
 {
+
+    public function saveNewProduct($request)
+    {
+        dd($request);
+    }
 }
