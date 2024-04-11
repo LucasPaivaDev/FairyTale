@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Request\UpdateProductRequest;
 use App\Http\Controllers\Request\SaveNewProductRequest;
 
-class ProductsController
+class OrdersController
 {
     public function __construct (private ProductsService $productsService)
     {
