@@ -2,27 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\ProductsService;
+use Illuminate\Http\Request;
+use App\Service\OrdersService;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Request\UpdateProductRequest;
-use App\Http\Controllers\Request\SaveNewProductRequest;
 
 class OrdersController
 {
-    public function __construct (private ProductsService $productsService)
+    public function __construct (private OrdersService $ordersService)
     {
     }
 
-    public function saveNewProductAction(SaveNewProductRequest $request): JsonResponse
+    public function createOrderAction(Request $request): JsonResponse
     {
-        $output = $this->productsService->saveNewProduct($request->json()->all());
+        $output = $this->ordersService->createOrder($request->json()->all());
 
         return response()->json($output, JsonResponse::HTTP_OK);
     } 
 
-    public function updateProductAction(UpdateProductRequest $request): JsonResponse
+    public function updateOrderAction(Request $request): JsonResponse
     {
-        $output = $this->productsService->updateProduct($request->json()->all());
+        $output = $this->ordersService->updateOrder($request->json()->all());
+
+        return response()->json($output, JsonResponse::HTTP_OK);
+    } 
+
+    public function deleteOrderAction($id): JsonResponse
+    {
+        $output = $this->ordersService->deleteOrder($id);
 
         return response()->json($output, JsonResponse::HTTP_OK);
     } 

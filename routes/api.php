@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 
