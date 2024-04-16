@@ -27,5 +27,12 @@ class ProductsController
         return response()->json($output, JsonResponse::HTTP_OK);
     } 
 
+    public function deleteProductAction($id): JsonResponse
+    {
+        $output = $this->productsService->deleteProduct($id);
+
+        return response()->json($output, JsonResponse::HTTP_OK);
+    }
+
 
 }

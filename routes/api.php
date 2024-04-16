@@ -17,7 +17,7 @@ Route::prefix('/product')->group(function () {
 Route::prefix('/order')->group(function () {
     Route::controller(OrdersController::class)->name('order.')->group(function () {
         Route::post('/create', 'createOrderAction')->name('orderSave');
-        Route::post('/update', 'updateOrderAction')->name('orderUpdate');
+        Route::post('/updateProducts', 'updateOrderAction')->name('orderUpdate');
         Route::delete('/delete/{id}', 'deleteOrderAction')->name('orderDelete');
     });
 });

@@ -10,9 +10,6 @@ class Orders extends Model
 {
     use HasFactory, Notifiable;
 
-    /**
-     * @var array<int, string>
-     */
     protected $fillable = [
         'id',
         'value',

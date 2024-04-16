@@ -5,48 +5,40 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Models\Orders;
+use App\Service\ProductOrderService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrdersService
 {
     use SoftDeletes;
     
-    public function __construct(private Orders $productsModel) {
+    public function __construct(
+        private Orders $productsModel, 
+        private ProductOrderService $productOrderService
+    ) {
     }
 
-    public function createOrder(array $productData): string
+    public function createOrder(array $orderData): ?Model
     {
-        $this->productsModel::updateOrCreate(
-        ['name' => $productData['name']],
+        return $this->productsModel::create(
         [
-            'name' => $productData['name'],
-            'value' => $productData['value'],
-            'type' => $productData['type'],
-            'image' => $productData['image'],
+            'value' => $orderData['value'],
+            'status' => $orderData['status'],
         ]);
-
-        return 'Produto salvo com sucesso';
     }
 
-    public function updateOrder(array $productData): string
+    public function updateOrder(array $orderData): ?Model
     {
-        $updateProduct = $this->productsModel::where('name', '=', $productData['name'])->update(
-        [
-            'name' => $productData['name'],
-            'value' => $productData['value'],
-            'type' => $productData['type'],
-            'image' => $productData['image'],
-        ]);
+        foreach ($orderData as $product) {
+            $this->productOrderService->createProductOrder($product);
 
-        if (empty($updateProduct)) {
-            return 'Produto não encontrado';
         }
-        return 'Produto atualizado com sucesso';
     }
 
     public function deleteOrder($id): string
     {
-        $deleteOrder = $this->productsModel::find($id)->delete();
+        $deleteOrder = $this->productsModel::where('id', '=', $id)->update(['deleted_at' => new \DateTime()]);
 
         if (empty($deleteOrder)) {
             return 'Pedido não encontrado';

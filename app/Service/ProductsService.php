@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Models\Products;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductsService
 {
@@ -42,5 +43,20 @@ class ProductsService
             return 'Produto não encontrado';
         }
         return 'Produto atualizado com sucesso';
+    }
+
+    public function deleteProduct($id)
+    {
+        $deleteProduct = $this->productsModel::where('id', '=', $id)->update(['deleted_at' => new \DateTime()]);
+
+        if (empty($deleteProduct)) {
+            return 'Pedido não encontrado';
+        } 
+        return 'Pedido excluido com sucesso';
+    }
+
+    public function getProductById($id)
+    {
+        return $this->productsModel->findBy();
     }
 }
