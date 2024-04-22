@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Models\Products;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductsService
@@ -55,8 +56,8 @@ class ProductsService
         return 'Pedido excluido com sucesso';
     }
 
-    public function getProductById($id)
+    public function getProductById($id): ?Model
     {
-        return $this->productsModel->findBy();
+        return $this->productsModel->findBy("id", $id);
     }
 }
