@@ -16,7 +16,7 @@ class ProductOrderService
     {
     }
 
-    public function updateOrCreateProductOrder(array $productOrderData): string
+    public function updateOrCreateProductOrder(array $productOrderData)
     {
         $this->productOrderModel->updateOrCreate(
             [
@@ -26,7 +26,7 @@ class ProductOrderService
             [
                 "id_order" => $productOrderData['order_id'],
                 "id_product" => $productOrderData['product_id'],
-                "quantity" => $productOrderData['quantity']//$this->calculateTotalProductsValue($productOrderData['product_id'], $productOrderData['quantity']),
+                "quantity" => $productOrderData['quantity']
             ]
         );
     }
@@ -41,11 +41,19 @@ class ProductOrderService
         return 'Pedido excluido com sucesso';
     }
 
-    private function getTotalValueByOrderId(int $orderId)
+    private function getTotalValueByOrderId(int $orderId): ?float
     {
-        $productModel = $this->productsService->getProductById($productId);
-        $produc
-        
+        $orderProductData = $this->productOrderModel->getProductsAndQuantityByOrderId($orderId);
+        if (!$orderProductData) {
+            return null;
+        }
 
+        $totalValue = 0;
+        foreach ($orderProductData as $orderProduct) {
+            $product = $this->productsService->getProductById($orderProduct['id_product']);
+            $totalValue += $product['value'] * $orderProduct['quantity'];
+        }
+
+        return $totalValue;
     }
 }

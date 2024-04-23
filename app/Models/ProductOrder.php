@@ -10,6 +10,13 @@ class ProductOrder extends Model
 {
     use HasFactory, Notifiable;
 
+    public function getProductsAndQuantityByOrderId(int $orderId): ?Model
+    {   
+        return $this->model
+        ->select("*")
+        ->where("id_order", "=", $orderId);
+    }
+
     protected $fillable = [
         'id',
         'id_product',

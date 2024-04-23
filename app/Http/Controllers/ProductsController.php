@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service\ProductsService;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Request\UpdateProductRequest;
-use App\Http\Controllers\Request\SaveNewProductRequest;
+use App\Http\Requests\NewProductRequest;
 
 class ProductsController
 {
@@ -13,7 +12,7 @@ class ProductsController
     {
     }
 
-    public function saveNewProductAction(SaveNewProductRequest $request): JsonResponse
+    public function saveNewProductAction(NewProductRequest $request): JsonResponse
     {
         $output = $this->productsService->saveNewProduct($request->json()->all());
 
