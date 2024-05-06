@@ -16,19 +16,19 @@ class ProductOrderService
     {
     }
 
-    public function updateOrCreateProductOrder(array $productOrderData)
+    public function updateOrCreateProductOrder(array $productOrderData): void
     {
         $this->productOrderModel->updateOrCreate(
             [
-                "id_order" => $productOrderData['order_id'],
-                "id_product" => $productOrderData['product_id']
+                "id_order" => $productOrderData['id_order'],
+                "id_product" => $productOrderData['id_product']
             ],
             [
-                "id_order" => $productOrderData['order_id'],
-                "id_product" => $productOrderData['product_id'],
+                "id_order" => $productOrderData['id_order'],
+                "id_product" => $productOrderData['id_product'],
                 "quantity" => $productOrderData['quantity']
             ]
-        );
+        ); 
     }
 
     public function deleteProductOrder($id): string
@@ -41,7 +41,7 @@ class ProductOrderService
         return 'Pedido excluido com sucesso';
     }
 
-    private function getTotalValueByOrderId(int $orderId): ?float
+    public function getTotalValueByOrderId(int $orderId): ?float
     {
         $orderProductData = $this->productOrderModel->getProductsAndQuantityByOrderId($orderId);
         if (!$orderProductData) {

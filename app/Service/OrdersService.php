@@ -28,13 +28,14 @@ class OrdersService
         ]);
     }
 
-    public function updateOrder(array $orderData): ?Model
+    public function updateOrder(array $orderData)
     {
-        foreach ($orderData as $product) {
+        foreach ($orderData['products'] as $product) {
             $this->productOrderService->updateOrCreateProductOrder($product);
         }
 
-        $totalValue = $this->productOrderService->getTotalValueByOrderId();
+        $totalValue = $this->productOrderService->getTotalValueByOrderId($orderData['id_order']);
+        dd($totalValue);
     }
 
     public function deleteOrder($id): string
