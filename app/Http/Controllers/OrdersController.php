@@ -17,21 +17,21 @@ class OrdersController
         $output = $this->ordersService->createOrder($request->json()->all());
 
         return response()->json($output, JsonResponse::HTTP_OK);
-    } 
+    }
 
     public function updateOrderAction(Request $request): JsonResponse
     {
-        $output = $this->ordersService->updateOrder($request->json()->all());
+         $this->ordersService->updateOrder($request->json()->all());
 
-        return response()->json($output, JsonResponse::HTTP_OK);
-    } 
+        return response()->json('Pedido Atualizado', JsonResponse::HTTP_OK);
+    }
 
     public function deleteOrderAction($id): JsonResponse
     {
         $output = $this->ordersService->deleteOrder($id);
 
         return response()->json($output, JsonResponse::HTTP_OK);
-    } 
+    }
 
 
 }

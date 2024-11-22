@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrdersService
 {
     use SoftDeletes;
-    
+
     public function __construct(
-        private Orders $productsModel, 
+        private Orders $ordersModel,
         private ProductOrderService $productOrderService
     ) {
     }
@@ -30,12 +30,20 @@ class OrdersService
 
     public function updateOrder(array $orderData)
     {
+        $orderId = (int) $orderData['id_order'];
         foreach ($orderData['products'] as $product) {
-            $this->productOrderService->updateOrCreateProductOrder($product);
+            $this->productOrderService->updateOrCreateProductOrder($product, $orderId);
         }
 
-        $totalValue = $this->productOrderService->getTotalValueByOrderId($orderData['id_order']);
-        dd($totalValue);
+        $totalValue = $this->productOrderService->getTotalValueByOrderId($orderId);
+        $this->ordersModel->updateOrCreate(
+            [
+                'id' => $orderData['id_order']
+            ],
+            [
+                'value' => $totalValue,
+            ]
+        );
     }
 
     public function deleteOrder($id): string

@@ -11,24 +11,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductOrderService
 {
     use SoftDeletes;
-    
-    public function __construct(private ProductOrder $productOrderModel, private ProductsService $productsService) 
+
+    public function __construct(private ProductOrder $productOrderModel, private ProductsService $productsService)
     {
     }
 
-    public function updateOrCreateProductOrder(array $productOrderData): void
+    public function updateOrCreateProductOrder(array $productOrderData, int $orderId): void
     {
         $this->productOrderModel->updateOrCreate(
             [
-                "id_order" => $productOrderData['id_order'],
+                "id_order" => $orderId,
                 "id_product" => $productOrderData['id_product']
             ],
             [
-                "id_order" => $productOrderData['id_order'],
+                "id_order" => $orderId,
                 "id_product" => $productOrderData['id_product'],
                 "quantity" => $productOrderData['quantity']
             ]
-        ); 
+        );
     }
 
     public function deleteProductOrder($id): string
@@ -43,7 +43,7 @@ class ProductOrderService
 
     public function getTotalValueByOrderId(int $orderId): ?float
     {
-        $orderProductData = $this->productOrderModel->getProductsAndQuantityByOrderId($orderId);
+        $orderProductData = $this->productOrderModel->all()->where("id_order", $orderId);
         if (!$orderProductData) {
             return null;
         }

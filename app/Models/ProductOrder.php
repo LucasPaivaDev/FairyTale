@@ -2,27 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductOrder extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    public function getProductsAndQuantityByOrderId(int $orderId): ?Model
-    {   
-        return $this->model
-        ->select("*")
-        ->where("id_order", "=", $orderId);
-    }
-
+    protected $table = "product_order";
     protected $fillable = [
         'id',
         'id_product',
         'id_order',
+        'quantity',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 }
+

@@ -48,16 +48,16 @@ class ProductsService
 
     public function deleteProduct($id)
     {
-        $deleteProduct = $this->productsModel::where('id', '=', $id)->update(['deleted_at' => new \DateTime()]);
+        $deleteProduct = $this->productsModel::where('id', $id)->update(['deleted_at' => new \DateTime()]);
 
         if (empty($deleteProduct)) {
             return 'Pedido não encontrado';
-        } 
+        }
         return 'Pedido excluido com sucesso';
     }
 
     public function getProductById($id): ?Model
     {
-        return $this->productsModel->findBy("id", $id);
+        return $this->productsModel->where('id', $id)->first();
     }
 }
